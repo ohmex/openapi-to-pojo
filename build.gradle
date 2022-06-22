@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'org.openapi.generator' version '6.0.0'
+}
+
+openApiGenerate {
+    generatorName = "java"
+    inputSpec = "$rootDir/finastra-payment-request-openapi.json"
+    outputDir = "$buildDir/generated/"
+    modelPackage = "in.ohmex.pojo"
+    generateModelTests = false // personal preference, as it's JUnit 4
+    globalProperties = [
+            // force only the models
+            apis: "false",
+            invokers: "false",
+            models: "",
+    ]
+    configOptions = [
+            dateLibrary: "java8",
+            library: "resttemplate",
+            additionalModelTypeAnnotations: "@lombok.Builder @lombok.AllArgsConstructor",
+    ]
+}
+
+compileJava.dependsOn tasks.openApiGenerate

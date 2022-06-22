@@ -1,0 +1,3659 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Payment Request Following Raw ISO20022",
+    "version": "2.0.1",
+    "description": "Initiate a request for payment in real-time schemes with Request and Response based on ISO20022 pain.013.001.05/pain.014.001.05.",
+    "x-finastra-category": "Payments",
+    "x-finastra-subcategory": "Payment Request",
+    "x-finastra-short-description": "Initiate a request for payment in real-time schemes with Request and Response based on ISO20022 pain.013.001.05/pain.014.001.05",
+    "x-finastra-tags": [
+      "Fusion Global PAYplus"
+    ],
+    "x-finastra-channel-type": "B2B",
+    "x-finastra-maturity-level": "BETA",
+    "x-finastra-audience": "PUBLIC",
+    "x-finastra-implementability": "INTERNAL",
+    "x-finastra-data-classification": [
+      "Restricted"
+    ],
+    "x-finastra-commitId": "7e7b343bfd5b01a558abac85eb6ce993af33a02f",
+    "contact": {
+      "name": "API Support",
+      "url": "https://community.fusionfabric.cloud/index.html"
+    }
+  },
+  "host": "api.fusionfabric.cloud",
+  "basePath": "/payment/iso/payment-request/v2",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "Oauth2": {
+      "type": "oauth2",
+      "description": "Oauth 2.0 authentication",
+      "tokenUrl": "https://api.fusionfabric.cloud/login/v1/sandbox/oidc/token",
+      "flow": "application",
+      "scopes": {}
+    }
+  },
+  "security": [
+    {
+      "Oauth2": []
+    }
+  ],
+  "paths": {
+    "/real-time/initiate": {
+      "post": {
+        "description": "initiate a new real time Creditor Payment Activation Request",
+        "operationId": "initiate",
+        "summary": "initiate a request for payment",
+        "parameters": [
+          {
+            "name": "PaymentInitiationRequest",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PaymentInitiationRequest"
+            },
+            "description": "the creditor initiate payment"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "successfully accept the payment initiation request accepted",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "relative URL to track the payment"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/PaymentResponse"
+            }
+          },
+          "400": {
+            "description": "The payment does not pass scheme validation",
+            "schema": {
+              "$ref": "#/definitions/ValidationResponse"
+            }
+          },
+          "401": {
+            "description": "Authorization has been denied for this request. Please check your subscription key or user type."
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "x-finastra-data-classification": [
+          "Restricted"
+        ]
+      }
+    },
+    "/real-time/reject": {
+      "post": {
+        "description": "reject a new Real Time payment",
+        "operationId": "reject",
+        "summary": "reject response for request for payment",
+        "parameters": [
+          {
+            "name": "PaymentInitiationRespond",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PaymentInitiationRespond"
+            },
+            "description": "the reponse to request for payment"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "successfully accept the payment reject respond",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "relative URL to track the payment"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/PaymentResponse"
+            }
+          },
+          "400": {
+            "description": "The payment does not pass scheme validation",
+            "schema": {
+              "$ref": "#/definitions/ValidationResponse"
+            }
+          },
+          "401": {
+            "description": "Authorization has been denied for this request. Please check your subscription key or user type."
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "x-finastra-data-classification": [
+          "Restricted"
+        ]
+      }
+    },
+    "/real-time/accept": {
+      "post": {
+        "description": "accept a new Real Time payment",
+        "operationId": "accept",
+        "summary": "accept response for request for payment",
+        "parameters": [
+          {
+            "name": "PaymentInitiationRespond",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PaymentInitiationRespond"
+            },
+            "description": "the reponse to request for payment"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "successfully accept the payment reject respond",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "relative URL to track the payment"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/PaymentResponse"
+            }
+          },
+          "400": {
+            "description": "The payment does not pass scheme validation",
+            "schema": {
+              "$ref": "#/definitions/ValidationResponse"
+            }
+          },
+          "401": {
+            "description": "Authorization has been denied for this request. Please check your subscription key or user type."
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "x-finastra-data-classification": [
+          "Restricted"
+        ]
+      }
+    },
+    "/real-time/{paymentRequestId}/status": {
+      "get": {
+        "description": "get the status of a payment",
+        "operationId": "getRealTimePaymentRequestIdStatus",
+        "summary": "/payments/request-for-payment/{paymentRequestId}/status",
+        "parameters": [
+          {
+            "name": "paymentRequestId",
+            "in": "path",
+            "description": "the id of the payment",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaymentResponse"
+            }
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "401": {
+            "description": "Authorization has been denied for this request. Please check your subscription key or user type."
+          },
+          "404": {
+            "description": "No Such Payment"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "x-finastra-data-classification": [
+          "Restricted"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "PaymentResponse": {
+      "type": "object",
+      "properties": {
+        "CstmrPmtStsRpt": {
+          "$ref": "#/definitions/CustomerPaymentStatusReportV06"
+        },
+        "@xmlns": {
+          "type": "string",
+          "example": "urn:iso:std:iso:20022:tech:xsd:pain.013.001.05",
+          "default": "urn:iso:std:iso:20022:tech:xsd:pain.013.001.05",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "CstmrPmtStsRpt"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "PaymentResponse"
+    },
+    "PaymentInitiationRequest": {
+      "type": "object",
+      "properties": {
+        "InitiationContext": {
+          "$ref": "#/definitions/InitiationContext"
+        },
+        "CdtrPmtActvtnReq": {
+          "$ref": "#/definitions/CreditorPaymentActivationRequestV05"
+        },
+        "@xmlns": {
+          "type": "string",
+          "example": "urn:iso:std:iso:20022:tech:xsd:pain.013.001.05",
+          "default": "urn:iso:std:iso:20022:tech:xsd:pain.013.001.05",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "InitiationContext",
+        "CdtrPmtActvtnReq"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "PaymentInitiationRequest"
+    },
+    "InitiationContext": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Initiation ID will be used for flow selection as well as rules identifications"
+        },
+        "subId": {
+          "type": "string",
+          "description": "Additional place holder for initiation ID incase another level of granularity is required in flow selection etc?"
+        },
+        "schmeNm": {
+          "type": "string",
+          "enum": [
+            "TCH_RTPS",
+            "INUPI"
+          ],
+          "description": "for cases where target schema is definitive (e.g. PSD2 initiating SEPA Inst payment) the target schema needs to be specified as it can not go elsewhere."
+        },
+        "saveOnError": {
+          "type": "boolean",
+          "description": ": defines whether the payment will be stored when business error occurs. Default value = true",
+          "default": true
+        },
+        "sourceId": {
+          "$ref": "#/definitions/Max16Text"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "example": {
+        "id": "real_time",
+        "subId": "string",
+        "schmeNm": "TCH_RTPS",
+        "saveOnError": true,
+        "sourceId": "string"
+      },
+      "description": "As defined in ISO20022 standard",
+      "title": "InitiationContext"
+    },
+    "PaymentInitiationRespond": {
+      "type": "object",
+      "properties": {
+        "InitiationContext": {
+          "$ref": "#/definitions/InitiationContext"
+        },
+        "CdtrPmtActvtnReqStsRpt": {
+          "$ref": "#/definitions/CreditorPaymentActivationRequestStatusReportV05"
+        },
+        "@xmlns": {
+          "type": "string",
+          "example": "urn:iso:std:iso:20022:tech:xsd:pain.014.001.05",
+          "default": "urn:iso:std:iso:20022:tech:xsd:pain.014.001.05",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "InitiationContext",
+        "CdtrPmtActvtnReqStsRpt"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "PaymentInitiationRespond"
+    },
+    "ValidationResponse": {
+      "description": "Validation errors response",
+      "title": "ValidationResponse",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Max1025Text"
+      }
+    },
+    "AccountIdentification4Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "IBAN": {
+          "$ref": "#/definitions/IBAN2007Identifier"
+        },
+        "Othr": {
+          "$ref": "#/definitions/GenericAccountIdentification1"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "AccountIdentification4Choice"
+    },
+    "AccountSchemeName1Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalAccountIdentification1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "AccountSchemeName1Choice"
+    },
+    "ActiveOrHistoricCurrencyAndAmount": {
+      "additionalProperties": false,
+      "properties": {
+        "Amt": {
+          "type": "number",
+          "description": "The amount in the specified currency"
+        },
+        "Ccy": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyCode"
+        }
+      },
+      "required": [
+        "Ccy"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "ActiveOrHistoricCurrencyAndAmount"
+    },
+    "ActiveOrHistoricCurrencyCode": {
+      "description": "Active Or Historic Currency Code following ISO 4217",
+      "title": "ActiveOrHistoricCurrencyCode",
+      "type": "string",
+      "pattern": "[A-Z]{3,3}",
+      "example": "USD"
+    },
+    "AddressType2Code": {
+      "enum": [
+        "ADDR",
+        "PBOX",
+        "HOME",
+        "BIZZ",
+        "MLTO",
+        "DLVY"
+      ],
+      "type": "string",
+      "description": "Identifies the nature of the postal address",
+      "title": "AddressType2Code"
+    },
+    "AmountType4Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "EqvtAmt": {
+          "$ref": "#/definitions/EquivalentAmount2"
+        },
+        "InstdAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "AmountType4Choice"
+    },
+    "AnyBICIdentifier": {
+      "pattern": "^([A-Z]{6,6}[2-9A-Z][0-9A-NP-Z]([0-9A-Z]{3,3})?)$",
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "AnyBICIdentifier"
+    },
+    "BICFIIdentifier": {
+      "pattern": "^([A-Z]{6,6}[2-9A-Z][0-9A-NP-Z]([0-9A-Z]{3,3})?)$",
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "BICFIIdentifier"
+    },
+    "Frequency6Code": {
+      "type": "string",
+      "enum": [
+        "YEAR",
+        "MNTH",
+        "QURT",
+        "MIAN",
+        "WEEK",
+        "DAIL",
+        "ADHO",
+        "INDA",
+        "FRTN"
+      ],
+      "description": "As defined in ISO20022 standard",
+      "title": "Frequency6Code"
+    },
+    "SequenceType3Code": {
+      "type": "string",
+      "enum": [
+        "FRST",
+        "RCUR",
+        "FNAL",
+        "OOFF",
+        "RPRE"
+      ],
+      "description": "As defined in ISO20022 standard",
+      "title": "SequenceType3Code"
+    },
+    "SettlementMethod1Code": {
+      "type": "string",
+      "enum": [
+        "INDA",
+        "INGA",
+        "COVE",
+        "CLRG"
+      ],
+      "description": "As defined in ISO20022 standard",
+      "title": "SettlementMethod1Code"
+    },
+    "BranchAndFinancialInstitutionIdentification5": {
+      "additionalProperties": false,
+      "properties": {
+        "BrnchId": {
+          "$ref": "#/definitions/BranchData2"
+        },
+        "FinInstnId": {
+          "$ref": "#/definitions/FinancialInstitutionIdentification8"
+        }
+      },
+      "required": [
+        "FinInstnId"
+      ],
+      "type": "object",
+      "description": "Cdtr,Debtr, IntrmyAgt information. i.e. If IntermediaryAgent2 is present, then IntermediaryAgent1 must be present.",
+      "title": "BranchAndFinancialInstitutionIdentification5"
+    },
+    "BranchData2": {
+      "additionalProperties": false,
+      "properties": {
+        "Id": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Nm": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "PstlAdr": {
+          "$ref": "#/definitions/PostalAddress6"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "BranchData2"
+    },
+    "CashAccount24": {
+      "additionalProperties": false,
+      "properties": {
+        "Ccy": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyCode"
+        },
+        "Id": {
+          "$ref": "#/definitions/AccountIdentification4Choice"
+        },
+        "Nm": {
+          "$ref": "#/definitions/Max70Text"
+        },
+        "Tp": {
+          "$ref": "#/definitions/CashAccountType2Choice"
+        }
+      },
+      "required": [
+        "Id"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "CashAccount24"
+    },
+    "CashAccountType2Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalCashAccountType1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "CashAccountType2Choice"
+    },
+    "CategoryPurpose1Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalCategoryPurpose1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "CategoryPurpose1Choice"
+    },
+    "Cheque7": {
+      "type": "object",
+      "description": "Provided information will be sent as is",
+      "title": "Cheque7",
+      "properties": {
+        "ChqTp": {
+          "$ref": "#/definitions/ChequeType2Code"
+        },
+        "ChqNb": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "ChqFr": {
+          "$ref": "#/definitions/NameAndAddress10"
+        },
+        "DlvryMtd": {
+          "$ref": "#/definitions/ChequeDeliveryMethod1Choice"
+        },
+        "DlvrTo": {
+          "$ref": "#/definitions/NameAndAddress10"
+        },
+        "InstrPrty": {
+          "$ref": "#/definitions/Priority2Code"
+        },
+        "ChqMtrtyDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "FrmsCd": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "MemoFld": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/definitions/Max35Text"
+          },
+          "description": "As defined in ISO20022 standard"
+        },
+        "RgnlClrZone": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "PrtLctn": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Sgntr": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/definitions/Max70Text"
+          },
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ChequeDeliveryMethod1Choice": {
+      "type": "object",
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ChequeDelivery1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "ChequeDeliveryMethod1Choice"
+    },
+    "Charges2": {
+      "additionalProperties": false,
+      "properties": {
+        "Agt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "Amt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        }
+      },
+      "required": [
+        "Agt",
+        "Amt"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "Charges2"
+    },
+    "ClearingSystemIdentification2Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalClearingSystemIdentification1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "ClearingSystemIdentification2Choice"
+    },
+    "ClearingSystemMemberIdentification2": {
+      "additionalProperties": false,
+      "properties": {
+        "ClrSysId": {
+          "$ref": "#/definitions/ClearingSystemIdentification2Choice"
+        },
+        "MmbId": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "required": [
+        "MmbId"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "ClearingSystemMemberIdentification2"
+    },
+    "ContactDetails2": {
+      "additionalProperties": false,
+      "properties": {
+        "EmailAdr": {
+          "$ref": "#/definitions/Max2048Text"
+        },
+        "FaxNb": {
+          "$ref": "#/definitions/PhoneNumber"
+        },
+        "MobNb": {
+          "$ref": "#/definitions/PhoneNumber"
+        },
+        "Nm": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "NmPrfx": {
+          "$ref": "#/definitions/NamePrefix1Code"
+        },
+        "Othr": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "PhneNb": {
+          "$ref": "#/definitions/PhoneNumber"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "ContactDetails2"
+    },
+    "CountryCode": {
+      "pattern": "^([A-Z]{2,2})$",
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "CountryCode"
+    },
+    "CreditDebitCode": {
+      "enum": [
+        "CRDT",
+        "DBIT"
+      ],
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "CreditDebitCode"
+    },
+    "CreditTransferTransaction22": {
+      "type": "object",
+      "properties": {
+        "PmtId": {
+          "$ref": "#/definitions/PaymentIdentification1"
+        },
+        "PmtTpInf": {
+          "$ref": "#/definitions/PaymentTypeInformation19"
+        },
+        "Amt": {
+          "$ref": "#/definitions/AmountType4Choice"
+        },
+        "ChrgBr": {
+          "$ref": "#/definitions/ChargeBearerType1Code"
+        },
+        "ChqInstr": {
+          "$ref": "#/definitions/Cheque7"
+        },
+        "UltmtDbtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "IntrmyAgt1": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "IntrmyAgt2": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "IntrmyAgt3": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "CdtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "Cdtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "CdtrAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "UltmtCdtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "InstrForCdtrAgt": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InstructionForCreditorAgent1"
+          },
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "InstrForDbtrAgt": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "Purp": {
+          "$ref": "#/definitions/Purpose2Choice"
+        },
+        "RgltryRptg": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/definitions/RegulatoryReporting3"
+          },
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "Tax": {
+          "$ref": "#/definitions/TaxInformation3"
+        },
+        "RltdRmtInf": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/definitions/RemittanceLocation4"
+          },
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "RmtInf": {
+          "$ref": "#/definitions/RemittanceInformation11"
+        },
+        "SplmtryData": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SupplementaryData1"
+          },
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "PmtId",
+        "Amt"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "CreditTransferTransaction22"
+    },
+    "CreditorPaymentActivationRequestV05": {
+      "type": "object",
+      "properties": {
+        "GrpHdr": {
+          "$ref": "#/definitions/GroupHeader45"
+        },
+        "PmtInf": {
+          "items": {
+            "$ref": "#/definitions/PaymentInstruction19"
+          },
+          "minItems": 1,
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "SplmtryData": {
+          "items": {
+            "$ref": "#/definitions/SupplementaryData1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "GrpHdr",
+        "PmtInf"
+      ],
+      "additionalProperties": false,
+      "example": {
+        "GrpHdr": {
+          "MsgId": "1506926089717",
+          "CreDtTm": "2016-11-08T13:21:00.941",
+          "NbOfTxs": "1",
+          "InitgPty": {
+            "Id": {
+              "OrgId": {
+                "Othr": [
+                  {
+                    "Id": "777777777"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "PmtInf": [
+          {
+            "PmtInfId": "1506926089717",
+            "PmtMtd": "TRF",
+            "ReqdExctnDt": "2016-08-28",
+            "Dbtr": {
+              "Nm": "NPP DR test2 ACC"
+            },
+            "DbtrAcct": {
+              "Id": {
+                "Othr": {
+                  "Id": "1919191919"
+                }
+              }
+            },
+            "DbtrAgt": {
+              "FinInstnId": {
+                "ClrSysMmbId": {
+                  "MmbId": "020010001"
+                }
+              }
+            },
+            "CdtTrfTx": [
+              {
+                "PmtId": {
+                  "InstrId": "1506926089717",
+                  "EndToEndId": "1506926089717"
+                },
+                "PmtTpInf": {
+                  "SvcLvl": {
+                    "Cd": "SDVA"
+                  },
+                  "LclInstrm": {
+                    "Prtry": "CONSUMER"
+                  }
+                },
+                "Amt": {
+                  "InstdAmt": {
+                    "Ccy": "USD",
+                    "Amt": 100.222
+                  }
+                },
+                "ChrgBr": "SLEV",
+                "CdtrAgt": {
+                  "FinInstnId": {
+                    "ClrSysMmbId": {
+                      "MmbId": "131000000"
+                    }
+                  }
+                },
+                "Cdtr": {
+                  "Nm": "NPP CR test ACC"
+                },
+                "CdtrAcct": {
+                  "Id": {
+                    "Othr": {
+                      "Id": "745521145"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "description": "As defined in ISO20022 standard",
+      "title": "CreditorPaymentActivationRequestV05"
+    },
+    "CreditorPaymentActivationRequestStatusReportV05": {
+      "additionalProperties": false,
+      "properties": {
+        "GrpHdr": {
+          "$ref": "#/definitions/GroupHeader46"
+        },
+        "OrgnlGrpInfAndSts": {
+          "$ref": "#/definitions/OriginalGroupInformation25"
+        },
+        "OrgnlPmtInfAndSts": {
+          "items": {
+            "$ref": "#/definitions/OriginalPaymentInstruction19"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "SplmtryData": {
+          "items": {
+            "$ref": "#/definitions/SupplementaryData1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "GrpHdr",
+        "OrgnlGrpInfAndSts"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "CreditorPaymentActivationRequestStatusReportV05"
+    },
+    "CreditorReferenceInformation2": {
+      "additionalProperties": false,
+      "properties": {
+        "Ref": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Tp": {
+          "$ref": "#/definitions/CreditorReferenceType2"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "CreditorReferenceInformation2"
+    },
+    "CreditorReferenceType1Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/DocumentType3Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "CreditorReferenceType1Choice"
+    },
+    "CreditorReferenceType2": {
+      "additionalProperties": false,
+      "properties": {
+        "CdOrPrtry": {
+          "$ref": "#/definitions/CreditorReferenceType1Choice"
+        },
+        "Issr": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "required": [
+        "CdOrPrtry"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "CreditorReferenceType2"
+    },
+    "CustomerPaymentStatusReportV06": {
+      "type": "object",
+      "properties": {
+        "GrpHdr": {
+          "$ref": "#/definitions/GroupHeader52"
+        },
+        "OrgnlGrpInfAndSts": {
+          "$ref": "#/definitions/OriginalGroupHeader1"
+        },
+        "OrgnlPmtInfAndSts": {
+          "items": {
+            "$ref": "#/definitions/OriginalPaymentInstruction12"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "SplmtryData": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SupplementaryData1"
+          },
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "GrpHdr",
+        "OrgnlGrpInfAndSts"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "CustomerPaymentStatusReportV06"
+    },
+    "DateAndPlaceOfBirth": {
+      "additionalProperties": false,
+      "properties": {
+        "BirthDt": {
+          "$ref": "#/definitions/BirthISODate"
+        },
+        "CityOfBirth": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "CtryOfBirth": {
+          "$ref": "#/definitions/CountryCode"
+        },
+        "PrvcOfBirth": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "required": [
+        "BirthDt",
+        "CityOfBirth",
+        "CtryOfBirth"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "DateAndPlaceOfBirth"
+    },
+    "DatePeriodDetails": {
+      "additionalProperties": false,
+      "properties": {
+        "FrDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "ToDt": {
+          "$ref": "#/definitions/ISODate"
+        }
+      },
+      "required": [
+        "FrDt",
+        "ToDt"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "DatePeriodDetails"
+    },
+    "DecimalNumber": {
+      "type": "number",
+      "description": "Amount of the individual transaction contained in the message.",
+      "title": "DecimalNumber"
+    },
+    "DiscountAmountAndType1": {
+      "additionalProperties": false,
+      "properties": {
+        "Amt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "Tp": {
+          "$ref": "#/definitions/DiscountAmountType1Choice"
+        }
+      },
+      "required": [
+        "Amt"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "DiscountAmountAndType1"
+    },
+    "DiscountAmountType1Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalDiscountAmountType1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "DiscountAmountType1Choice"
+    },
+    "DocumentAdjustment1": {
+      "additionalProperties": false,
+      "properties": {
+        "AddtlInf": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "Amt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "CdtDbtInd": {
+          "$ref": "#/definitions/CreditDebitCode"
+        },
+        "Rsn": {
+          "$ref": "#/definitions/Max4Text"
+        }
+      },
+      "required": [
+        "Amt"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "DocumentAdjustment1"
+    },
+    "DocumentLineIdentification1": {
+      "additionalProperties": false,
+      "properties": {
+        "Nb": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "RltdDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "Tp": {
+          "$ref": "#/definitions/DocumentLineType1"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "DocumentLineIdentification1"
+    },
+    "DocumentLineInformation1": {
+      "additionalProperties": false,
+      "properties": {
+        "Amt": {
+          "$ref": "#/definitions/RemittanceAmount3"
+        },
+        "Desc": {
+          "$ref": "#/definitions/Max2048Text"
+        },
+        "Id": {
+          "items": {
+            "$ref": "#/definitions/DocumentLineIdentification1"
+          },
+          "minItems": 1,
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "Id"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "DocumentLineInformation1"
+    },
+    "DocumentLineType1": {
+      "additionalProperties": false,
+      "properties": {
+        "CdOrPrtry": {
+          "$ref": "#/definitions/DocumentLineType1Choice"
+        },
+        "Issr": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "required": [
+        "CdOrPrtry"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "DocumentLineType1"
+    },
+    "DocumentLineType1Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalDocumentLineType1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "DocumentLineType1Choice"
+    },
+    "DocumentType3Code": {
+      "enum": [
+        "RADM",
+        "RPIN",
+        "FXDR",
+        "DISP",
+        "PUOR",
+        "SCOR"
+      ],
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "DocumentType3Code"
+    },
+    "DocumentType6Code": {
+      "enum": [
+        "MSIN",
+        "CNFA",
+        "DNFA",
+        "CINV",
+        "CREN",
+        "DEBN",
+        "HIRI",
+        "SBIN",
+        "CMCN",
+        "SOAC",
+        "DISP",
+        "BOLD",
+        "VCHR",
+        "AROI",
+        "TSUT",
+        "PUOR"
+      ],
+      "type": "string",
+      "description": "This is DocumentTypeCodes in Data Element Name. DocumentType5Code and DocumentType6Code are comprised of the same code sets with the exception of PUOR (Purchase Order) that is included in DocumentType6Code.",
+      "title": "DocumentType6Code"
+    },
+    "EquivalentAmount2": {
+      "additionalProperties": false,
+      "properties": {
+        "Amt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "CcyOfTrf": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyCode"
+        }
+      },
+      "required": [
+        "Amt",
+        "CcyOfTrf"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "EquivalentAmount2"
+    },
+    "ExternalAccountIdentification1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalAccountIdentification1Code"
+    },
+    "Max1025Text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1025,
+      "description": "As defined in ISO20022 standard",
+      "title": "Max1025Text"
+    },
+    "ExternalCashAccountType1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalCashAccountType1Code"
+    },
+    "ExternalCategoryPurpose1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalCategoryPurpose1Code"
+    },
+    "ExternalClearingSystemIdentification1Code": {
+      "maxLength": 5,
+      "minLength": 1,
+      "type": "string",
+      "description": "Clearing codes have to be in specific, country dependant format. They always start with country's payment system prefix (5 characters, referenced as code in the ISO's table) and are followed by varying number of digits/letters (referenced as bank identifier in ISO's table)",
+      "title": "ExternalClearingSystemIdentification1Code"
+    },
+    "ExternalDiscountAmountType1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalDiscountAmountType1Code"
+    },
+    "ExternalDocumentLineType1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalDocumentLineType1Code"
+    },
+    "ExternalFinancialInstitutionIdentification1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalFinancialInstitutionIdentification1Code"
+    },
+    "ExternalCashClearingSystem1Code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 3,
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalCashClearingSystem1Code"
+    },
+    "ExternalGarnishmentType1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalGarnishmentType1Code"
+    },
+    "ExternalLocalInstrument1Code": {
+      "maxLength": 35,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalLocalInstrument1Code"
+    },
+    "ExternalOrganisationIdentification1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalOrganisationIdentification1Code"
+    },
+    "ExternalPersonIdentification1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalPersonIdentification1Code"
+    },
+    "ExternalMandateSetupReason1Code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4,
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalMandateSetupReason1Code"
+    },
+    "ExternalServiceLevel1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalServiceLevel1Code"
+    },
+    "ExternalStatusReason1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalStatusReason1Code"
+    },
+    "ExternalTaxAmountType1Code": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ExternalTaxAmountType1Code"
+    },
+    "FinancialIdentificationSchemeName1Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalFinancialInstitutionIdentification1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "FinancialIdentificationSchemeName1Choice"
+    },
+    "FinancialInstitutionIdentification8": {
+      "additionalProperties": false,
+      "properties": {
+        "BICFI": {
+          "$ref": "#/definitions/BICFIIdentifier"
+        },
+        "ClrSysMmbId": {
+          "$ref": "#/definitions/ClearingSystemMemberIdentification2"
+        },
+        "Nm": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "Othr": {
+          "$ref": "#/definitions/GenericFinancialIdentification1"
+        },
+        "PstlAdr": {
+          "$ref": "#/definitions/PostalAddress6"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "FinancialInstitutionIdentification8"
+    },
+    "Garnishment1": {
+      "additionalProperties": false,
+      "properties": {
+        "Dt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "FmlyMdclInsrncInd": {
+          "type": "boolean",
+          "description": "As defined in ISO20022 standard"
+        },
+        "Grnshee": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "GrnshmtAdmstr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "MplyeeTermntnInd": {
+          "type": "boolean",
+          "description": "As defined in ISO20022 standard"
+        },
+        "RefNb": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "RmtdAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "Tp": {
+          "$ref": "#/definitions/GarnishmentType1"
+        }
+      },
+      "required": [
+        "Tp"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "Garnishment1"
+    },
+    "GarnishmentType1": {
+      "additionalProperties": false,
+      "properties": {
+        "CdOrPrtry": {
+          "$ref": "#/definitions/GarnishmentType1Choice"
+        },
+        "Issr": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "required": [
+        "CdOrPrtry"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "GarnishmentType1"
+    },
+    "GarnishmentType1Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalGarnishmentType1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "GarnishmentType1Choice"
+    },
+    "GenericAccountIdentification1": {
+      "additionalProperties": false,
+      "properties": {
+        "Id": {
+          "$ref": "#/definitions/Max34Text"
+        },
+        "Issr": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "SchmeNm": {
+          "$ref": "#/definitions/AccountSchemeName1Choice"
+        }
+      },
+      "required": [
+        "Id"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "GenericAccountIdentification1"
+    },
+    "GenericFinancialIdentification1": {
+      "additionalProperties": false,
+      "properties": {
+        "Id": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Issr": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "SchmeNm": {
+          "$ref": "#/definitions/FinancialIdentificationSchemeName1Choice"
+        }
+      },
+      "required": [
+        "Id"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "GenericFinancialIdentification1"
+    },
+    "GenericOrganisationIdentification1": {
+      "additionalProperties": false,
+      "properties": {
+        "Id": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Issr": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "SchmeNm": {
+          "$ref": "#/definitions/OrganisationIdentificationSchemeName1Choice"
+        }
+      },
+      "required": [
+        "Id"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "GenericOrganisationIdentification1"
+    },
+    "GenericPersonIdentification1": {
+      "additionalProperties": false,
+      "properties": {
+        "Id": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Issr": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "SchmeNm": {
+          "$ref": "#/definitions/PersonIdentificationSchemeName1Choice"
+        }
+      },
+      "required": [
+        "Id"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "GenericPersonIdentification1"
+    },
+    "OriginalPaymentInstruction12": {
+      "type": "object",
+      "properties": {
+        "OrgnlPmtInfId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlNbOfTxs": {
+          "$ref": "#/definitions/Max15NumericText"
+        },
+        "OrgnlCtrlSum": {
+          "$ref": "#/definitions/DecimalNumber"
+        },
+        "PmtInfSts": {
+          "$ref": "#/definitions/TransactionGroupStatus3Code"
+        },
+        "StsRsnInf": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StatusReasonInformation9"
+          },
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "NbOfTxsPerSts": {
+          "$ref": "#/definitions/NumberOfTransactionsPerStatus3"
+        },
+        "TxInfAndSts": {
+          "items": {
+            "$ref": "#/definitions/PaymentTransaction57"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "OrgnlPmtInfId"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "OriginalPaymentInstruction12"
+    },
+    "PaymentTransaction57": {
+      "type": "object",
+      "properties": {
+        "StsId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlInstrId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlEndToEndId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "TxSts": {
+          "$ref": "#/definitions/TransactionIndividualStatus3Code"
+        },
+        "StsRsnInf": {
+          "items": {
+            "$ref": "#/definitions/StatusReasonInformation9"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "ChrgsInf": {
+          "$ref": "#/definitions/Charges2"
+        },
+        "AccptncDtTm": {
+          "$ref": "#/definitions/ISODateTime"
+        },
+        "AcctSvcrRef": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "ClrSysRef": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlTxRef": {
+          "$ref": "#/definitions/OriginalTransactionReference20"
+        },
+        "SplmtryData": {
+          "$ref": "#/definitions/SupplementaryData1"
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "PaymentTransaction57"
+    },
+    "OriginalTransactionReference20": {
+      "type": "object",
+      "properties": {
+        "IntrBkSttlmAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "Amt": {
+          "$ref": "#/definitions/AmountType4Choice"
+        },
+        "IntrBkSttlmDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "ReqdColltnDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "ReqdExctnDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "CdtrSchmeId": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "SttlmInf": {
+          "$ref": "#/definitions/SettlementInstruction1"
+        },
+        "PmtTpInf": {
+          "$ref": "#/definitions/PaymentTypeInformation25"
+        },
+        "PmtMtd": {
+          "$ref": "#/definitions/PaymentMethod4Code"
+        },
+        "MndtRltdInf": {
+          "$ref": "#/definitions/MandateRelatedInformation10"
+        },
+        "RmtInf": {
+          "$ref": "#/definitions/RemittanceInformation10"
+        },
+        "UltmtDbtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "Dbtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "DbtrAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "DbtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "DbtrAgtAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "CdtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "CdtrAgtAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "Cdtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "CdtrAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "UltmtCdtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "OriginalTransactionReference20"
+    },
+    "PaymentTypeInformation25": {
+      "type": "object",
+      "properties": {
+        "InstrPrty": {
+          "$ref": "#/definitions/Priority2Code"
+        },
+        "ClrChanl": {
+          "$ref": "#/definitions/ClearingChannel2Code"
+        },
+        "SvcLvl": {
+          "$ref": "#/definitions/ServiceLevel8Choice"
+        },
+        "LclInstrm": {
+          "$ref": "#/definitions/LocalInstrument2Choice"
+        },
+        "SeqTp": {
+          "$ref": "#/definitions/SequenceType3Code"
+        },
+        "CtgyPurp": {
+          "$ref": "#/definitions/CategoryPurpose1Choice"
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "PaymentTypeInformation25"
+    },
+    "MandateRelatedInformation10": {
+      "type": "object",
+      "properties": {
+        "MndtId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "DtOfSgntr": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "AmdmntInd": {
+          "type": "boolean",
+          "description": "As defined in ISO20022 standard"
+        },
+        "AmdmntInfDtls": {
+          "$ref": "#/definitions/AmendmentInformationDetails10"
+        },
+        "ElctrncSgntr": {
+          "$ref": "#/definitions/Max1025Text"
+        },
+        "FrstColltnDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "FnlColltnDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "Frqcy": {
+          "$ref": "#/definitions/Frequency21Choice"
+        },
+        "Rsn": {
+          "$ref": "#/definitions/MandateSetupReason1Choice"
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "MandateRelatedInformation10"
+    },
+    "AmendmentInformationDetails10": {
+      "type": "object",
+      "properties": {
+        "OrgnlMndtId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlCdtrSchmeId": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "OrgnlCdtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "OrgnlCdtrAgtAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "OrgnlDbtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "OrgnlDbtrAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "OrgnlDbtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "OrgnlDbtrAgtAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "OrgnlFnlColltnDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "OrgnlFrqcy": {
+          "$ref": "#/definitions/Frequency21Choice"
+        },
+        "OrgnlRsn": {
+          "$ref": "#/definitions/MandateSetupReason1Choice"
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "AmendmentInformationDetails10"
+    },
+    "SettlementInstruction1": {
+      "type": "object",
+      "properties": {
+        "SttlmMtd": {
+          "$ref": "#/definitions/SettlementMethod1Code"
+        },
+        "SttlmAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "ClrSys": {
+          "$ref": "#/definitions/ClearingSystemIdentification3Choice"
+        },
+        "InstgRmbrsmntAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "InstgRmbrsmntAgtAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "InstdRmbrsmntAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "InstdRmbrsmntAgtAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "ThrdRmbrsmntAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "ThrdRmbrsmntAgtAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        }
+      },
+      "required": [
+        "SttlmMtd"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "SettlementInstruction1"
+    },
+    "MandateSetupReason1Choice": {
+      "type": "object",
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalMandateSetupReason1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max70Text"
+        }
+      },
+      "required": [
+        "Cd",
+        "Prtry"
+      ],
+      "description": "As defined in ISO20022 standard",
+      "title": "MandateSetupReason1Choice"
+    },
+    "ClearingSystemIdentification3Choice": {
+      "type": "object",
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalCashClearingSystem1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "required": [
+        "Cd",
+        "Prtry"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "ClearingSystemIdentification3Choice"
+    },
+    "Frequency21Choice": {
+      "type": "object",
+      "properties": {
+        "Tp": {
+          "$ref": "#/definitions/Frequency6Code"
+        },
+        "Prd": {
+          "$ref": "#/definitions/FrequencyPeriod1"
+        }
+      },
+      "required": [
+        "Tp",
+        "Prd"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "Frequency21Choice"
+    },
+    "FrequencyPeriod1": {
+      "type": "object",
+      "properties": {
+        "Tp": {
+          "$ref": "#/definitions/Frequency6Code"
+        },
+        "CntPerPrd": {
+          "$ref": "#/definitions/DecimalNumber"
+        }
+      },
+      "required": [
+        "Tp",
+        "CntPerPrd"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "FrequencyPeriod1"
+    },
+    "RemittanceInformation10": {
+      "type": "object",
+      "properties": {
+        "Ustrd": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Max140Text"
+          },
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "Strd": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StructuredRemittanceInformation12"
+          },
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "RemittanceInformation10"
+    },
+    "GroupHeader46": {
+      "additionalProperties": false,
+      "properties": {
+        "CdtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "CreDtTm": {
+          "$ref": "#/definitions/ISODateTime"
+        },
+        "DbtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "InitgPty": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "MsgId": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "required": [
+        "CreDtTm",
+        "InitgPty",
+        "MsgId"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "GroupHeader46"
+    },
+    "IBAN2007Identifier": {
+      "pattern": "^([A-Z]{2,2}[0-9]{2,2}[0-9A-Za-z]{1,30})$",
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "IBAN2007Identifier"
+    },
+    "BirthISODate": {
+      "type": "string",
+      "description": "As defined in ISO20022 standard for birth dates",
+      "title": "BirthISODate",
+      "x-finastra-data-classification": [
+        "Restricted"
+      ]
+    },
+    "ISODate": {
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "ISODate"
+    },
+    "ISODateTime": {
+      "type": "string",
+      "description": "Date and time in YYYY-MM-DDThh:mm:ss format",
+      "title": "ISODateTime"
+    },
+    "ClearingChannel2Code": {
+      "type": "string",
+      "enum": [
+        "RTGS",
+        "RTNS",
+        "MPNS",
+        "BOOK"
+      ],
+      "description": "As defined in ISO20022 standard",
+      "title": "ClearingChannel2Code"
+    },
+    "LocalInstrument2Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalLocalInstrument1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "LocalInstrument2Choice"
+    },
+    "Max105Text": {
+      "maxLength": 105,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "Max105Text"
+    },
+    "Max140Text": {
+      "maxLength": 140,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "Max140Text"
+    },
+    "Max15NumericText": {
+      "pattern": "^([0-9]{1,15})$",
+      "type": "string",
+      "description": "Number of individual transactions contained in the message. Should be set to 1",
+      "title": "Max15NumericText"
+    },
+    "Max16Text": {
+      "maxLength": 16,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "Max16Text"
+    },
+    "Max2048Text": {
+      "maxLength": 2048,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "Max2048Text",
+      "x-finastra-data-classification": [
+        "Restricted"
+      ]
+    },
+    "Max34Text": {
+      "maxLength": 34,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "Max34Text"
+    },
+    "Max350Text": {
+      "maxLength": 350,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "Max350Text"
+    },
+    "Max35Text": {
+      "maxLength": 35,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "Max35Text"
+    },
+    "Max4Text": {
+      "maxLength": 4,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "Max4Text"
+    },
+    "Max70Text": {
+      "maxLength": 70,
+      "minLength": 1,
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "Max70Text",
+      "x-finastra-data-classification": [
+        "Restricted"
+      ]
+    },
+    "NamePrefix1Code": {
+      "enum": [
+        "DOCT",
+        "MIST",
+        "MISS",
+        "MADM"
+      ],
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "NamePrefix1Code"
+    },
+    "NumberOfTransactionsPerStatus3": {
+      "additionalProperties": false,
+      "properties": {
+        "DtldCtrlSum": {
+          "$ref": "#/definitions/DecimalNumber"
+        },
+        "DtldNbOfTxs": {
+          "$ref": "#/definitions/Max15NumericText"
+        },
+        "DtldSts": {
+          "$ref": "#/definitions/TransactionIndividualStatus3Code"
+        }
+      },
+      "required": [
+        "DtldNbOfTxs",
+        "DtldSts"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "NumberOfTransactionsPerStatus3"
+    },
+    "OrganisationIdentification8": {
+      "additionalProperties": false,
+      "properties": {
+        "AnyBIC": {
+          "$ref": "#/definitions/AnyBICIdentifier"
+        },
+        "Othr": {
+          "items": {
+            "$ref": "#/definitions/GenericOrganisationIdentification1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "OrganisationIdentification8"
+    },
+    "OrganisationIdentificationSchemeName1Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalOrganisationIdentification1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "OrganisationIdentificationSchemeName1Choice"
+    },
+    "OriginalGroupInformation25": {
+      "additionalProperties": false,
+      "properties": {
+        "GrpSts": {
+          "$ref": "#/definitions/TransactionGroupStatus3Code"
+        },
+        "NbOfTxsPerSts": {
+          "items": {
+            "$ref": "#/definitions/NumberOfTransactionsPerStatus3"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "OrgnlCreDtTm": {
+          "$ref": "#/definitions/ISODateTime"
+        },
+        "OrgnlCtrlSum": {
+          "$ref": "#/definitions/DecimalNumber"
+        },
+        "OrgnlMsgId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlMsgNmId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlNbOfTxs": {
+          "$ref": "#/definitions/Max15NumericText"
+        },
+        "StsRsnInf": {
+          "items": {
+            "$ref": "#/definitions/StatusReasonInformation9"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "OrgnlMsgId",
+        "OrgnlMsgNmId"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "OriginalGroupInformation25"
+    },
+    "OriginalPaymentInstruction19": {
+      "additionalProperties": false,
+      "properties": {
+        "NbOfTxsPerSts": {
+          "items": {
+            "$ref": "#/definitions/NumberOfTransactionsPerStatus3"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "OrgnlCtrlSum": {
+          "$ref": "#/definitions/DecimalNumber"
+        },
+        "OrgnlNbOfTxs": {
+          "$ref": "#/definitions/Max15NumericText"
+        },
+        "OrgnlPmtInfId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "PmtInfSts": {
+          "$ref": "#/definitions/TransactionGroupStatus3Code"
+        },
+        "StsRsnInf": {
+          "items": {
+            "$ref": "#/definitions/StatusReasonInformation9"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "TxInfAndSts": {
+          "items": {
+            "$ref": "#/definitions/PaymentTransaction69"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "OrgnlPmtInfId"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "OriginalPaymentInstruction19"
+    },
+    "OriginalTransactionReference23": {
+      "additionalProperties": false,
+      "properties": {
+        "Amt": {
+          "$ref": "#/definitions/AmountType4Choice"
+        },
+        "Cdtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "CdtrAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "CdtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "Dbtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "DbtrAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "DbtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "PmtMtd": {
+          "$ref": "#/definitions/PaymentMethod4Code"
+        },
+        "PmtTpInf": {
+          "$ref": "#/definitions/PaymentTypeInformation19"
+        },
+        "ReqdExctnDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "RmtInf": {
+          "$ref": "#/definitions/RemittanceInformation11"
+        },
+        "UltmtCdtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "UltmtDbtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        }
+      },
+      "required": [
+        "Cdtr",
+        "CdtrAgt"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "OriginalTransactionReference23"
+    },
+    "Party11Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "OrgId": {
+          "$ref": "#/definitions/OrganisationIdentification8"
+        },
+        "PrvtId": {
+          "$ref": "#/definitions/PersonIdentification5"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "Party11Choice"
+    },
+    "PartyIdentification43": {
+      "additionalProperties": false,
+      "description": "Provided information will be sent as is",
+      "title": "PartyIdentification43",
+      "properties": {
+        "CtctDtls": {
+          "$ref": "#/definitions/ContactDetails2"
+        },
+        "CtryOfRes": {
+          "$ref": "#/definitions/CountryCode"
+        },
+        "Id": {
+          "$ref": "#/definitions/Party11Choice"
+        },
+        "Nm": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "PstlAdr": {
+          "$ref": "#/definitions/PostalAddress6"
+        }
+      },
+      "type": "object"
+    },
+    "PaymentMethod4Code": {
+      "enum": [
+        "CHK",
+        "TRF",
+        "DD",
+        "TRA"
+      ],
+      "type": "string",
+      "description": "Specifies the transfer method that will be used to transfer an amount of money. Must be 'TRF'.",
+      "title": "PaymentMethod4Code"
+    },
+    "PaymentTransaction69": {
+      "additionalProperties": false,
+      "properties": {
+        "AccptncDtTm": {
+          "$ref": "#/definitions/ISODateTime"
+        },
+        "AcctSvcrRef": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "ChrgsInf": {
+          "items": {
+            "$ref": "#/definitions/Charges2"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "ClrSysRef": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlEndToEndId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlInstrId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlTxRef": {
+          "$ref": "#/definitions/OriginalTransactionReference23"
+        },
+        "SplmtryData": {
+          "items": {
+            "$ref": "#/definitions/SupplementaryData1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "StsId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "StsRsnInf": {
+          "items": {
+            "$ref": "#/definitions/StatusReasonInformation9"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "TxSts": {
+          "$ref": "#/definitions/TransactionIndividualStatus3Code"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "PaymentTransaction69"
+    },
+    "PaymentTypeInformation19": {
+      "additionalProperties": false,
+      "description": "PmtTpInf may not be given in both 'PmtInf' and in 'PmtInf/CdtTrfTxInf' simultaneously",
+      "title": "PaymentTypeInformation19",
+      "properties": {
+        "CtgyPurp": {
+          "$ref": "#/definitions/CategoryPurpose1Choice"
+        },
+        "InstrPrty": {
+          "$ref": "#/definitions/Priority2Code"
+        },
+        "LclInstrm": {
+          "$ref": "#/definitions/LocalInstrument2Choice"
+        },
+        "SvcLvl": {
+          "$ref": "#/definitions/ServiceLevel8Choice"
+        }
+      },
+      "type": "object"
+    },
+    "PercentageRate": {
+      "type": "number",
+      "description": "Rate expressed as a percentage, ie, in hundredths, eg, 0.7 is 7/10 of a percent, and 7.0 is 7%. Format:- fractionDigits: 10 totalDigits: 11",
+      "title": "PercentageRate"
+    },
+    "PersonIdentification5": {
+      "additionalProperties": false,
+      "properties": {
+        "DtAndPlcOfBirth": {
+          "$ref": "#/definitions/DateAndPlaceOfBirth"
+        },
+        "Othr": {
+          "items": {
+            "$ref": "#/definitions/GenericPersonIdentification1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "PersonIdentification5"
+    },
+    "PersonIdentificationSchemeName1Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalPersonIdentification1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "PersonIdentificationSchemeName1Choice"
+    },
+    "PhoneNumber": {
+      "pattern": "^(\\+[0-9]{1,3}\\-[\\(-\\)\\+\\-0-9]{1,30})$",
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "PhoneNumber",
+      "x-finastra-data-classification": [
+        "Restricted"
+      ]
+    },
+    "PostalAddress6": {
+      "additionalProperties": false,
+      "properties": {
+        "AdrLine": {
+          "items": {
+            "$ref": "#/definitions/Max70Text"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "AdrTp": {
+          "$ref": "#/definitions/AddressType2Code"
+        },
+        "BldgNb": {
+          "$ref": "#/definitions/Max16Text"
+        },
+        "Ctry": {
+          "$ref": "#/definitions/CountryCode"
+        },
+        "CtrySubDvsn": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Dept": {
+          "$ref": "#/definitions/Max70Text"
+        },
+        "PstCd": {
+          "$ref": "#/definitions/Max16Text"
+        },
+        "StrtNm": {
+          "$ref": "#/definitions/Max70Text"
+        },
+        "SubDept": {
+          "$ref": "#/definitions/Max70Text"
+        },
+        "TwnNm": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "PostalAddress6"
+    },
+    "ReferredDocumentInformation6": {
+      "type": "object",
+      "properties": {
+        "Tp": {
+          "$ref": "#/definitions/ReferredDocumentType4"
+        },
+        "Nb": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "RltdDt": {
+          "$ref": "#/definitions/ISODate"
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "ReferredDocumentInformation6"
+    },
+    "Priority2Code": {
+      "enum": [
+        "HIGH",
+        "NORM"
+      ],
+      "type": "string",
+      "description": "Indicator of the urgency or order of importance that the instructing party would like the instructed party to apply to the processing of the instruction. Note: 'NORM' or 'HIGH' may be used ",
+      "title": "Priority2Code"
+    },
+    "ReferredDocumentInformation7": {
+      "additionalProperties": false,
+      "properties": {
+        "LineDtls": {
+          "items": {
+            "$ref": "#/definitions/DocumentLineInformation1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "Nb": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "RltdDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "Tp": {
+          "$ref": "#/definitions/ReferredDocumentType4"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "ReferredDocumentInformation7"
+    },
+    "ReferredDocumentType3Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/DocumentType6Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "ReferredDocumentType3Choice"
+    },
+    "ReferredDocumentType4": {
+      "additionalProperties": false,
+      "properties": {
+        "CdOrPrtry": {
+          "$ref": "#/definitions/ReferredDocumentType3Choice"
+        },
+        "Issr": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "required": [
+        "CdOrPrtry"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "ReferredDocumentType4"
+    },
+    "RemittanceAmount2": {
+      "additionalProperties": false,
+      "properties": {
+        "AdjstmntAmtAndRsn": {
+          "items": {
+            "$ref": "#/definitions/DocumentAdjustment1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "CdtNoteAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "DscntApldAmt": {
+          "items": {
+            "$ref": "#/definitions/DiscountAmountAndType1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "DuePyblAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "RmtdAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "TaxAmt": {
+          "items": {
+            "$ref": "#/definitions/TaxAmountAndType1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "RemittanceAmount2"
+    },
+    "RemittanceAmount3": {
+      "additionalProperties": false,
+      "properties": {
+        "AdjstmntAmtAndRsn": {
+          "items": {
+            "$ref": "#/definitions/DocumentAdjustment1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "CdtNoteAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "DscntApldAmt": {
+          "items": {
+            "$ref": "#/definitions/DiscountAmountAndType1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "DuePyblAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "RmtdAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "TaxAmt": {
+          "items": {
+            "$ref": "#/definitions/TaxAmountAndType1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "RemittanceAmount3"
+    },
+    "RemittanceInformation11": {
+      "additionalProperties": false,
+      "properties": {
+        "Strd": {
+          "items": {
+            "$ref": "#/definitions/StructuredRemittanceInformation13"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "Ustrd": {
+          "items": {
+            "$ref": "#/definitions/Max140Text"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "RemittanceInformation11"
+    },
+    "ServiceLevel8Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalServiceLevel1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "ServiceLevel8Choice"
+    },
+    "StructuredRemittanceInformation12": {
+      "type": "object",
+      "properties": {
+        "RfrdDocInf": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReferredDocumentInformation6"
+          },
+          "description": "As defined in ISO20022 standard"
+        },
+        "RfrdDocAmt": {
+          "$ref": "#/definitions/RemittanceAmount2"
+        },
+        "CdtrRefInf": {
+          "$ref": "#/definitions/CreditorReferenceInformation2"
+        },
+        "Invcr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "Invcee": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "TaxRmt": {
+          "$ref": "#/definitions/TaxInformation4"
+        },
+        "GrnshmtRmt": {
+          "$ref": "#/definitions/Garnishment1"
+        },
+        "AddtlRmtInf": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/definitions/Max140Text"
+          },
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "StructuredRemittanceInformation12"
+    },
+    "StatusReason6Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalStatusReason1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "StatusReason6Choice"
+    },
+    "OriginalGroupHeader1": {
+      "type": "object",
+      "properties": {
+        "OrgnlMsgId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlMsgNmId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "OrgnlCreDtTm": {
+          "$ref": "#/definitions/ISODateTime"
+        },
+        "OrgnlNbOfTxs": {
+          "$ref": "#/definitions/Max15NumericText"
+        },
+        "OrgnlCtrlSum": {
+          "$ref": "#/definitions/DecimalNumber"
+        },
+        "GrpSts": {
+          "$ref": "#/definitions/TransactionGroupStatus3Code"
+        }
+      },
+      "required": [
+        "OrgnlMsgId",
+        "OrgnlMsgNmId"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "OriginalGroupHeader1"
+    },
+    "GroupHeader52": {
+      "type": "object",
+      "properties": {
+        "MsgId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "CreDtTm": {
+          "$ref": "#/definitions/ISODateTime"
+        },
+        "InitgPty": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "FwdgAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "DbtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "CdtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        }
+      },
+      "required": [
+        "MsgId",
+        "CreDtTm"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "GroupHeader52"
+    },
+    "GroupHeader45": {
+      "type": "object",
+      "properties": {
+        "MsgId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "CreDtTm": {
+          "$ref": "#/definitions/ISODateTime"
+        },
+        "NbOfTxs": {
+          "$ref": "#/definitions/Max15NumericText"
+        },
+        "CtrlSum": {
+          "$ref": "#/definitions/DecimalNumber"
+        },
+        "InitgPty": {
+          "$ref": "#/definitions/PartyIdentification43"
+        }
+      },
+      "required": [
+        "MsgId",
+        "CreDtTm",
+        "NbOfTxs",
+        "InitgPty"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "GroupHeader45"
+    },
+    "InstructionForCreditorAgent1": {
+      "type": "object",
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/Instruction3Code"
+        },
+        "InstrInf": {
+          "$ref": "#/definitions/Max140Text"
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "InstructionForCreditorAgent1"
+    },
+    "NameAndAddress10": {
+      "type": "object",
+      "properties": {
+        "Nm": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "Adr": {
+          "$ref": "#/definitions/PostalAddress6"
+        }
+      },
+      "required": [
+        "Nm",
+        "Adr"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "NameAndAddress10"
+    },
+    "PaymentIdentification1": {
+      "type": "object",
+      "properties": {
+        "InstrId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "EndToEndId": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "required": [
+        "EndToEndId"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "PaymentIdentification1"
+    },
+    "PaymentInstruction19": {
+      "type": "object",
+      "properties": {
+        "PmtInfId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "PmtMtd": {
+          "$ref": "#/definitions/PaymentMethod7Code"
+        },
+        "PmtTpInf": {
+          "$ref": "#/definitions/PaymentTypeInformation19"
+        },
+        "ReqdExctnDt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "Dbtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "DbtrAcct": {
+          "$ref": "#/definitions/CashAccount24"
+        },
+        "DbtrAgt": {
+          "$ref": "#/definitions/BranchAndFinancialInstitutionIdentification5"
+        },
+        "UltmtDbtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "ChrgBr": {
+          "$ref": "#/definitions/ChargeBearerType1Code"
+        },
+        "CdtTrfTx": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/definitions/CreditTransferTransaction22"
+          },
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "required": [
+        "PmtInfId",
+        "PmtMtd",
+        "ReqdExctnDt",
+        "Dbtr",
+        "DbtrAcct",
+        "DbtrAgt",
+        "CdtTrfTx"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "PaymentInstruction19"
+    },
+    "Purpose2Choice": {
+      "type": "object",
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalPurpose1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "Purpose2Choice"
+    },
+    "RegulatoryAuthority2": {
+      "type": "object",
+      "properties": {
+        "Nm": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "Ctry": {
+          "$ref": "#/definitions/CountryCode"
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "RegulatoryAuthority2"
+    },
+    "RegulatoryReporting3": {
+      "type": "object",
+      "properties": {
+        "DbtCdtRptgInd": {
+          "$ref": "#/definitions/RegulatoryReportingType1Code"
+        },
+        "Authrty": {
+          "$ref": "#/definitions/RegulatoryAuthority2"
+        },
+        "Dtls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StructuredRegulatoryReporting3"
+          },
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "RegulatoryReporting3"
+    },
+    "RemittanceLocation4": {
+      "type": "object",
+      "properties": {
+        "RmtId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "RmtLctnDtls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RemittanceLocationDetails1"
+          },
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "RemittanceLocation4"
+    },
+    "RemittanceLocationDetails1": {
+      "type": "object",
+      "properties": {
+        "Mtd": {
+          "$ref": "#/definitions/RemittanceLocationMethod2Code"
+        },
+        "ElctrncAdr": {
+          "$ref": "#/definitions/Max2048Text"
+        },
+        "PstlAdr": {
+          "$ref": "#/definitions/NameAndAddress10"
+        }
+      },
+      "required": [
+        "Mtd"
+      ],
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "RemittanceLocationDetails1"
+    },
+    "StructuredRegulatoryReporting3": {
+      "type": "object",
+      "properties": {
+        "Tp": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Dt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "Ctry": {
+          "$ref": "#/definitions/CountryCode"
+        },
+        "Cd": {
+          "$ref": "#/definitions/Max10Text"
+        },
+        "Amt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "Inf": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Max35Text"
+          },
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "As defined in ISO20022 standard",
+      "title": "StructuredRegulatoryReporting3"
+    },
+    "StatusReasonInformation9": {
+      "additionalProperties": false,
+      "properties": {
+        "AddtlInf": {
+          "items": {
+            "$ref": "#/definitions/Max105Text"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "Orgtr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "Rsn": {
+          "$ref": "#/definitions/StatusReason6Choice"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "StatusReasonInformation9"
+    },
+    "StructuredRemittanceInformation13": {
+      "additionalProperties": false,
+      "properties": {
+        "AddtlRmtInf": {
+          "items": {
+            "$ref": "#/definitions/Max140Text"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "CdtrRefInf": {
+          "$ref": "#/definitions/CreditorReferenceInformation2"
+        },
+        "GrnshmtRmt": {
+          "$ref": "#/definitions/Garnishment1"
+        },
+        "Invcee": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "Invcr": {
+          "$ref": "#/definitions/PartyIdentification43"
+        },
+        "RfrdDocAmt": {
+          "$ref": "#/definitions/RemittanceAmount2"
+        },
+        "RfrdDocInf": {
+          "items": {
+            "$ref": "#/definitions/ReferredDocumentInformation7"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "TaxRmt": {
+          "$ref": "#/definitions/TaxInformation4"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "StructuredRemittanceInformation13"
+    },
+    "SupplementaryData1": {
+      "additionalProperties": false,
+      "description": "Provided information will be sent as is",
+      "title": "SupplementaryData1",
+      "properties": {
+        "Envlp": {
+          "$ref": "#/definitions/SupplementaryDataEnvelope1"
+        },
+        "PlcAndNm": {
+          "$ref": "#/definitions/Max350Text"
+        }
+      },
+      "required": [
+        "Envlp"
+      ],
+      "type": "object"
+    },
+    "SupplementaryDataEnvelope1": {
+      "type": "string",
+      "description": "As defined in ISO20022 standard",
+      "title": "SupplementaryDataEnvelope1"
+    },
+    "TaxAmount1": {
+      "additionalProperties": false,
+      "properties": {
+        "Dtls": {
+          "items": {
+            "$ref": "#/definitions/TaxRecordDetails1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard",
+          "x-finastra-data-classification": [
+            "Restricted"
+          ]
+        },
+        "Rate": {
+          "$ref": "#/definitions/PercentageRate"
+        },
+        "TaxblBaseAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "TtlAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "TaxAmount1"
+    },
+    "TaxAmountAndType1": {
+      "additionalProperties": false,
+      "properties": {
+        "Amt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "Tp": {
+          "$ref": "#/definitions/TaxAmountType1Choice"
+        }
+      },
+      "required": [
+        "Amt"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "TaxAmountAndType1"
+    },
+    "TaxAmountType1Choice": {
+      "additionalProperties": false,
+      "properties": {
+        "Cd": {
+          "$ref": "#/definitions/ExternalTaxAmountType1Code"
+        },
+        "Prtry": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "TaxAmountType1Choice"
+    },
+    "TaxAuthorisation1": {
+      "additionalProperties": false,
+      "properties": {
+        "Nm": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "Titl": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "TaxAuthorisation1"
+    },
+    "TaxInformation3": {
+      "type": "object",
+      "description": "Provided information will be sent as is",
+      "title": "TaxInformation3",
+      "properties": {
+        "Cdtr": {
+          "$ref": "#/definitions/TaxParty1"
+        },
+        "Dbtr": {
+          "$ref": "#/definitions/TaxParty2"
+        },
+        "AdmstnZn": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "RefNb": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "Mtd": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "TtlTaxblBaseAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "TtlTaxAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "Dt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "SeqNb": {
+          "type": "number",
+          "format": "double",
+          "example": 100000.02,
+          "description": "As defined in ISO20022 standard"
+        },
+        "Rcrd": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TaxRecord1"
+          },
+          "description": "As defined in ISO20022 standard"
+        }
+      },
+      "additionalProperties": false
+    },
+    "TaxInformation4": {
+      "additionalProperties": false,
+      "description": "Provided information will be sent as is",
+      "title": "TaxInformation4",
+      "properties": {
+        "AdmstnZone": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Cdtr": {
+          "$ref": "#/definitions/TaxParty1"
+        },
+        "Dbtr": {
+          "$ref": "#/definitions/TaxParty2"
+        },
+        "Dt": {
+          "$ref": "#/definitions/ISODate"
+        },
+        "Mtd": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Rcrd": {
+          "items": {
+            "$ref": "#/definitions/TaxRecord1"
+          },
+          "type": "array",
+          "description": "As defined in ISO20022 standard"
+        },
+        "RefNb": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "SeqNb": {
+          "type": "number",
+          "format": "double",
+          "example": 100000.02,
+          "description": "As defined in ISO20022 standard"
+        },
+        "TtlTaxAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "TtlTaxblBaseAmt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "UltmtDbtr": {
+          "$ref": "#/definitions/TaxParty2"
+        }
+      },
+      "type": "object"
+    },
+    "TaxParty1": {
+      "additionalProperties": false,
+      "properties": {
+        "RegnId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "TaxId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "TaxTp": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "Party on the credit side of the transaction to which the tax applies. This message item is composed of the TaxId,RegnId and TaxTp with minLength: 1 and maxLength:35",
+      "title": "TaxParty1"
+    },
+    "TaxParty2": {
+      "additionalProperties": false,
+      "properties": {
+        "Authstn": {
+          "$ref": "#/definitions/TaxAuthorisation1"
+        },
+        "RegnId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "TaxId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "TaxTp": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "TaxParty2"
+    },
+    "TaxPeriod1": {
+      "additionalProperties": false,
+      "properties": {
+        "FrToDt": {
+          "$ref": "#/definitions/DatePeriodDetails"
+        },
+        "Tp": {
+          "$ref": "#/definitions/TaxRecordPeriod1Code"
+        },
+        "Yr": {
+          "$ref": "#/definitions/ISODate"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "TaxPeriod1"
+    },
+    "TaxRecord1": {
+      "additionalProperties": false,
+      "properties": {
+        "AddtlInf": {
+          "$ref": "#/definitions/Max140Text"
+        },
+        "CertId": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Ctgy": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "CtgyDtls": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "DbtrSts": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "FrmsCd": {
+          "$ref": "#/definitions/Max35Text"
+        },
+        "Prd": {
+          "$ref": "#/definitions/TaxPeriod1"
+        },
+        "TaxAmt": {
+          "$ref": "#/definitions/TaxAmount1"
+        },
+        "Tp": {
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "TaxRecord1"
+    },
+    "TaxRecordDetails1": {
+      "additionalProperties": false,
+      "properties": {
+        "Amt": {
+          "$ref": "#/definitions/ActiveOrHistoricCurrencyAndAmount"
+        },
+        "Prd": {
+          "$ref": "#/definitions/TaxPeriod1"
+        }
+      },
+      "required": [
+        "Amt"
+      ],
+      "type": "object",
+      "description": "As defined in ISO20022 standard",
+      "title": "TaxRecordDetails1"
+    },
+    "ChargeBearerType1Code": {
+      "type": "string",
+      "description": "If ChargeBearer is present, then CreditTransferTransactionInformation/ChargeBearer is not allowed.If CreditTransferTransactionInformation/ChargeBearer is present, then ChargeBearer is not allowed.CreditTransferTransactionInformation/ChargeBearer and ChargeBearer may both be absent.",
+      "title": "ChargeBearerType1Code",
+      "enum": [
+        "DEBT",
+        "CRED",
+        "SHAR",
+        "SLEV"
+      ]
+    },
+    "ChequeDelivery1Code": {
+      "type": "string",
+      "description": "If PaymentMethod is CHK and CreditTransferTransactionInformation/ChequeInstruction/DeliveryMethod/Code is present and different from MLFA, CRFA, RGFA or PUFA, then CreditTransferTransactionInformation/CreditorAgent is not allowed.",
+      "title": "ChequeDelivery1Code",
+      "enum": [
+        "MLDB",
+        "MLCD",
+        "MLFA",
+        "CRDB",
+        "CRCD",
+        "CRFA",
+        "PUDB",
+        "PUCD",
+        "PUFA",
+        "RGDB",
+        "RGCD",
+        "RGFA"
+      ]
+    },
+    "ChequeType2Code": {
+      "type": "string",
+      "description": "Specifies the type of cheque to be issued",
+      "title": "ChequeType2Code",
+      "enum": [
+        "CCHQ",
+        "CCCH",
+        "BCHQ",
+        "DRFT",
+        "ELDR"
+      ]
+    },
+    "Instruction3Code": {
+      "type": "string",
+      "description": "If InstructionForCreditorAgent/Code contains CHQB (BankCheque), then CreditorAccount is not allowed.",
+      "title": "Instruction3Code",
+      "enum": [
+        "CHQB",
+        "HOLD",
+        "PHOB",
+        "TELB"
+      ]
+    },
+    "Max10Text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10,
+      "description": "As defined in ISO20022 standard",
+      "title": "Max10Text"
+    },
+    "PaymentMethod7Code": {
+      "type": "string",
+      "description": "Specifies the transfer method that will be used to transfer an amount of money. Must be 'TRF'.",
+      "title": "PaymentMethod7Code",
+      "default": "TRF",
+      "enum": [
+        "CHK",
+        "TRF"
+      ]
+    },
+    "RegulatoryReportingType1Code": {
+      "type": "string",
+      "description": "Identifies whether the regulatory reporting information applies to the debit side, to the credit side or to both debit and credit sides of the transaction.",
+      "title": "RegulatoryReportingType1Code",
+      "enum": [
+        "CRED",
+        "DEBT",
+        "BOTH"
+      ]
+    },
+    "RemittanceLocationMethod2Code": {
+      "type": "string",
+      "description": "Method used to deliver the remittance advice information.",
+      "title": "RemittanceLocationMethod2Code",
+      "enum": [
+        "FAXI",
+        "EDIC",
+        "URID",
+        "EMAL",
+        "POST",
+        "SMSM"
+      ]
+    },
+    "TaxRecordPeriod1Code": {
+      "enum": [
+        "MM01",
+        "MM02",
+        "MM03",
+        "MM04",
+        "MM05",
+        "MM06",
+        "MM07",
+        "MM08",
+        "MM09",
+        "MM10",
+        "MM11",
+        "MM12",
+        "QTR1",
+        "QTR2",
+        "QTR3",
+        "QTR4",
+        "HLF1",
+        "HLF2"
+      ],
+      "type": "string",
+      "description": "Identification of the period related to the tax payment",
+      "title": "TaxRecordPeriod1Code"
+    },
+    "TransactionGroupStatus3Code": {
+      "enum": [
+        "ACTC",
+        "RCVD",
+        "PART",
+        "RJCT",
+        "PDNG",
+        "ACCP",
+        "ACSP",
+        "ACSC",
+        "ACWC"
+      ],
+      "type": "string",
+      "description": "Specifies the status of the payment information group",
+      "title": "TransactionGroupStatus3Code"
+    },
+    "TransactionIndividualStatus3Code": {
+      "enum": [
+        "ACTC",
+        "RJCT",
+        "PDNG",
+        "ACCP",
+        "ACSP",
+        "ACSC",
+        "ACWC"
+      ],
+      "type": "string",
+      "description": "Common transaction status for all individual transactions reported",
+      "title": "TransactionIndividualStatus3Code"
+    },
+    "ExternalPurpose1Code": {
+      "type": "string",
+      "description": "ExternalPurpose1Code is used for defining the purpose of the payment",
+      "title": "ExternalPurpose1Code",
+      "minLength": 1,
+      "maxLength": 4
+    }
+  }
+}
